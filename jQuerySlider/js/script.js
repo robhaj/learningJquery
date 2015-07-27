@@ -1,9 +1,10 @@
-$(document).ready(function(){
+$(document).ready(function() {
 
-  // set options
-  var speed = 500;    //fade speed in ms
-  var autoloop = false; //auto slider on/off
-  var autoloop_speed = 5000; //auto slide speed in ms
+// set options
+var speed = 500;    //fade speed in ms
+var autoloop = true; //auto slider on/off
+var autoloop_speed = 1000; //auto slide speed in ms
+var run;
 
   //add initial class
   $('.slide').first().addClass('active');
@@ -18,9 +19,17 @@ $(document).ready(function(){
   $('#next').click(nextSlide);
   $('#prev').click(prevSlide);
 
-  //autoloop slides
-  if (autoloop === true){
-    setInterval(nextSlide);
+  $('#toggle').click(function() {
+
+    if (autoloop) {
+      run = setInterval(function() {
+        nextSlide() }, autoloop_speed);
+      autoloop = false;
+    } else {
+      window.clearInterval(run);
+      autoloop = true;
+    };
+  });
 
     //switch to next slide
     function nextSlide() {
@@ -47,5 +56,4 @@ $(document).ready(function(){
       $('.slide').fadeOut(speed);
       $('.active').fadeIn(speed);
     };
-  };
 });
